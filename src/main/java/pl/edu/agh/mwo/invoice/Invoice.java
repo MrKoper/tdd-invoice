@@ -1,20 +1,22 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
-	private Map<Product, Integer> products = new HashMap<Product, Integer>();
+	private Map<Product, Integer> products = new LinkedHashMap<Product, Integer>();
 	private int number;
 	private static Integer nextNumber = 1;
-	
+
 	public Invoice() {
 		this.number = nextNumber++;
 	}
-	
+
 	public void addProduct(Product product) {
 		addProduct(product, 1);
 	}
@@ -49,6 +51,23 @@ public class Invoice {
 	}
 
 	public Integer getNumber() {
-		return this.number;	
+		return this.number;
+	}
+
+	public String getAsText() {
+		StringBuilder sb = new StringBuilder("");
+		sb.append("Faktura nr " + this.number);
+		DecimalFormat df = new DecimalFormat("0.00");
+		for (Product product : products.keySet()) {
+			BigDecimal quantity = new BigDecimal(products.get(product));
+			sb.append("\n");
+			sb.append(product.getName());
+			sb.append(" ");
+			sb.append(quantity);
+			sb.append(" ");
+			sb.append(df.format(product.getPrice()));
+		}
+		sb.append("\nLiczba pozycji: " + products.size());
+		return sb.toString();
 	}
 }

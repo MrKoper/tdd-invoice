@@ -132,4 +132,32 @@ public class InvoiceTest {
 			Assert.assertThat(number1, Matchers.lessThan(number2));			
 		}
 	}
+	
+	@Test
+	public void testPrintedInvoiceNumber() {
+		String printedInvoice = invoice.getAsText();
+		String number = invoice.getNumber().toString();
+		Assert.assertThat(printedInvoice, Matchers.containsString("nr " + number));
+	}
+/*
+	@Test
+	public void testPrintedProductNumer() {
+		String printedNumberProduct = product.getNumber();
+		Assert.assertThat(reason, actual, matcher);
+	}
+	*/
+	@Test
+	public void testEachProductInItsOwnline() {
+		invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5,00")), 2);
+		invoice.addProduct(new DairyProduct("Frytki", new BigDecimal("6,50")), 3);
+		Assert.assertThat(invoice.getAsText(), Matchers.containsString("Chleb 2 5,00\nFrytki 3 6,50"));
+	}
+	/*
+	@Test
+	public void testAddingTheSameProductTwice() {
+		invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5,00")));
+		invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5,00")));
+		Assert.assertThat(invoice.getAsText(), Matchers.containsString("Chleb 2 5,00"));
+	}
+	*/
 }
