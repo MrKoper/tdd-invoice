@@ -152,12 +152,12 @@ public class InvoiceTest {
 		invoice.addProduct(new DairyProduct("Frytki", new BigDecimal("6,50")), 3);
 		Assert.assertThat(invoice.getAsText(), Matchers.containsString("Chleb 2 5,00\nFrytki 3 6,50"));
 	}
-	/*
+
 	@Test
 	public void testAddingTheSameProductTwice() {
 		invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5,00")));
 		invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5,00")));
 		Assert.assertThat(invoice.getAsText(), Matchers.containsString("Chleb 2 5,00"));
 	}
-	*/
+
 }
